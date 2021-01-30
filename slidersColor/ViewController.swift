@@ -25,62 +25,76 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        resultColorRedView.layer.cornerRadius = 15
-        resultColorGreenView.layer.cornerRadius = 15
-        resultColorBlueView.layer.cornerRadius = 15
         firstView.layer.cornerRadius = 15
-
-        sliderRed.value = 0
-        sliderRed.minimumValue = 0
-        sliderRed.maximumValue = 1
-        sliderRed.minimumTrackTintColor = .red
         
-        sliderGreen.value = 0
-        sliderGreen.minimumValue = 0
-        sliderGreen.maximumValue = 1
-        sliderGreen.minimumTrackTintColor = .green
-
-        sliderBlue.value = 0
-        sliderBlue.minimumValue = 0
-        sliderBlue.maximumValue = 1
-        sliderBlue.minimumTrackTintColor = .blue
+        viewViewDidLoad(for: resultColorRedView)
+        viewViewDidLoad(for: resultColorGreenView)
+        viewViewDidLoad(for: resultColorBlueView)
         
-        redValueLabel.text = String(sliderRed.value)
-        greenColorLabel.text = String(sliderGreen.value)
-        blueColorLabel.text = String(sliderBlue.value)
-
-        resultColorRedView.backgroundColor = resultColorRedView.backgroundColor?.withAlphaComponent(0)
-        resultColorBlueView.backgroundColor = resultColorBlueView.backgroundColor?.withAlphaComponent(0)
-        resultColorGreenView.backgroundColor = resultColorGreenView.backgroundColor?.withAlphaComponent(0)
+        sliderViewDidLoad(for: sliderRed, color: .red)
+        sliderViewDidLoad(for: sliderGreen, color: .green)
+        sliderViewDidLoad(for: sliderBlue, color: .blue)
         
+        textViewDidLoad(for: redValueLabel)
+        textViewDidLoad(for: greenColorLabel)
+        textViewDidLoad(for: blueColorLabel)
     }
-
+    
     @IBAction func redSliderAction() {
-        resultColorRedView.backgroundColor = .red
-        redValueLabel.text = String(Double(round(100 * sliderRed.value)) / 100)
-        
-        let sliderValue = CGFloat(sliderRed.value)
-        
-        resultColorRedView.backgroundColor = resultColorRedView.backgroundColor?.withAlphaComponent(sliderValue)
+        sliderAction(
+            for: redValueLabel,
+            for: sliderRed,
+            and: resultColorRedView,
+            color: .red
+        )
     }
     
     @IBAction func greenSliderAction() {
-        resultColorGreenView.backgroundColor = .green
-        greenColorLabel.text = String(Double(round(100 * sliderGreen.value)) / 100)
-        
-        let sliderValue = CGFloat(sliderGreen.value)
-        
-        resultColorGreenView.backgroundColor = resultColorGreenView.backgroundColor?.withAlphaComponent(sliderValue)
+        sliderAction(
+            for: greenColorLabel,
+            for: sliderGreen,
+            and: resultColorGreenView,
+            color: .green
+        )
     }
     
     @IBAction func blueSliderAction() {
-        resultColorBlueView.backgroundColor = .blue
-        blueColorLabel.text = String(Double(round(100 * sliderBlue.value)) / 100)
+        sliderAction(
+            for: blueColorLabel,
+            for: sliderBlue,
+            and: resultColorBlueView,
+            color: .blue)
+    }
+    
+    private func sliderViewDidLoad(for slider: UISlider, color: UIColor) {
+        slider.value = 0
+        slider.minimumValue = 0
+        slider.maximumValue = 1
+        slider.minimumTrackTintColor = color
+    }
+    
+    private func viewViewDidLoad(for view: UIView) {
+        view.layer.cornerRadius = 15
+        view.backgroundColor = view.backgroundColor?.withAlphaComponent(0)
+    }
+    
+    private func textViewDidLoad(for textView: UILabel) {
+        textView.text = String(sliderRed.value)
+    }
+    
+    private func sliderAction(
+        for label: UILabel,
+        for slider: UISlider,
+        and view: UIView,
+        color: UIColor
+    ) {
+        view.backgroundColor = color
         
-        let sliderValue = CGFloat(sliderBlue.value)
+        label.text = String(Double(round(100 * slider.value)) / 100)
         
-        resultColorBlueView.backgroundColor = resultColorBlueView.backgroundColor?.withAlphaComponent(sliderValue)
+        let sliderValue = CGFloat(slider.value)
+        
+        view.backgroundColor = view.backgroundColor?.withAlphaComponent(sliderValue)
     }
     
 }
-
